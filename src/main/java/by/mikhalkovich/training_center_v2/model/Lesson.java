@@ -1,5 +1,6 @@
 package by.mikhalkovich.training_center_v2.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Lesson {
     private Long id;
 
     @Column(name = "start_time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startTime;
 
     @Column(name = "lesson_description")

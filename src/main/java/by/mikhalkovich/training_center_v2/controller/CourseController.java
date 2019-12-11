@@ -1,12 +1,16 @@
 package by.mikhalkovich.training_center_v2.controller;
 
 import by.mikhalkovich.training_center_v2.dto.CourseDto;
+import by.mikhalkovich.training_center_v2.dto.UserProfile;
+import by.mikhalkovich.training_center_v2.model.Category;
 import by.mikhalkovich.training_center_v2.model.Course;
+import by.mikhalkovich.training_center_v2.model.User;
 import by.mikhalkovich.training_center_v2.service.CourseService;
+import by.mikhalkovich.training_center_v2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,10 +18,12 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
+    private final UserService userService;
 
     @Autowired
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, UserService userService) {
         this.courseService = courseService;
+        this.userService = userService;
     }
     //get all courses
     @GetMapping("/course/all")
@@ -28,6 +34,27 @@ public class CourseController {
     @GetMapping("/course/{id}")
     public CourseDto getCourse(@PathVariable("id") Long id) {
         return courseService.findCourseById(id);
+    }
+    //subscribe on course
+    @PostMapping("/course/{id}/subscribe")
+    public String subscribe(Authentication authentication,
+                            @PathVariable("id") Long id) {
+        String username = authentication.getName();
+        courseService.subscribe(username, id);
+        return "Listener subscribed successfully.";
+    }
+    //unsubscribe
+    @PostMapping("/course/{id}/unsubscribe")
+    public String unsubscribe(Authentication authentication,
+                              @PathVariable("id") Long id) {
+        String username = authentication.getName();
+        courseService.unsubscribe(username, id);
+        return "Listener unsubscribed successfully.";
+    }
+    //get listeners of current course
+    @GetMapping("/course/{id}/listeners")
+    public List<UserProfile> getListenerOfCurrentCourse(@PathVariable("id") Long id) {
+        return userService.findListenersOfCurrentCourse(id);
     }
 
 }

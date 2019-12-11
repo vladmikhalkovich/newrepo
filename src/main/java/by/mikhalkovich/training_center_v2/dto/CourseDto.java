@@ -6,17 +6,19 @@ import by.mikhalkovich.training_center_v2.model.Lecturer;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class CourseDto {
 
-    private Long id;
+    private Long id, lecturerId;
     private String courseName;
     private String courseDescription;
     private int courseDuration;
     private LocalDate startDate;
     private Category category;
-    private Lecturer lecturer;
+    private List<UserProfile> listeners = new ArrayList<>();
 
     public static CourseDto fromCourse(Course course){
         CourseDto courseDto = new CourseDto();
@@ -26,7 +28,7 @@ public class CourseDto {
         courseDto.setCourseDuration(course.getCourseDuration());
         courseDto.setStartDate(course.getStartDate());
         courseDto.setCategory(course.getCategory());
-        courseDto.setLecturer(course.getLecturer());
+        courseDto.setLecturerId(course.getLecturer().getId());
         return courseDto;
     }
 }

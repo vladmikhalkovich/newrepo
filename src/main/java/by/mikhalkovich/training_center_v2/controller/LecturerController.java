@@ -1,15 +1,17 @@
 package by.mikhalkovich.training_center_v2.controller;
 
+import by.mikhalkovich.training_center_v2.dto.CourseDto;
 import by.mikhalkovich.training_center_v2.model.Course;
 import by.mikhalkovich.training_center_v2.model.Lecturer;
 import by.mikhalkovich.training_center_v2.service.CourseService;
 import by.mikhalkovich.training_center_v2.service.LecturerService;
 import by.mikhalkovich.training_center_v2.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class LecturerController {
@@ -33,5 +35,20 @@ public class LecturerController {
         newCourse.setLecturer(currentLecturer);
         courseService.save(newCourse);
         return "Course added successfully.";
+    }
+    //get current lecturer courses
+    @GetMapping("/lecturer/my_courses")
+    public List<CourseDto> getCurrentLecturerCourses(Authentication authentication) {
+        String username = authentication.getName();
+        Lecturer currentLecturer = lecturerService.findByUserId(userService.findByUsername(username).getId());
+        return courseService.findCoursesByLecturerId(currentLecturer.getId());
+    }
+    //update course
+    @PutMapping("/lecturer/{id}/update")
+    public String updateCourse(@PathVariable("id") Course courseFromDb,
+                               @RequestBody Course course) {
+        BeanUtils.copyProperties(course, courseFromDb, "id", "lecturer", "listener", "lesson");
+        courseService.save(courseFromDb);
+        return "Course updated successfully.";
     }
 }

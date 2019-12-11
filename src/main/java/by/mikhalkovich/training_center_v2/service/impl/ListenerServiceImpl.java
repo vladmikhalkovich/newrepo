@@ -20,4 +20,9 @@ public class ListenerServiceImpl implements ListenerService {
     public Listener save(Listener listener) {
         return listenerRepository.save(listener);
     }
+
+    @Override
+    public Listener findByUserId(Long id) {
+        return listenerRepository.findByUserId(id);
+    }
 }

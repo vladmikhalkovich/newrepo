@@ -1,6 +1,8 @@
 package by.mikhalkovich.training_center_v2.controller;
 
+import by.mikhalkovich.training_center_v2.dto.PasswordDto;
 import by.mikhalkovich.training_center_v2.dto.UserProfile;
+import by.mikhalkovich.training_center_v2.model.Role;
 import by.mikhalkovich.training_center_v2.model.User;
 import by.mikhalkovich.training_center_v2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +32,26 @@ public class UserProfileController {
     public UserProfile getUserProfile(@PathVariable("id") Long id) {
         return userService.findUserProfileById(id);
     }
+
+    //return role by user id
+    @GetMapping("/user_profile/{id}/role")
+    public Role getRoleById(@PathVariable("id") Long id) {
+        return userService.findRoleById(id);
+    }
+
+//    @PutMapping("/user_profile/change_password")
+//    public String changePassword(Authentication authentication,
+//                                 @RequestBody PasswordDto passwordDto) {
+//        String username = authentication.getName();
+//    }
+
+    @PutMapping("/user_profile/update")
+    public String updateUserProfile(Authentication authentication,
+                                    @RequestBody UserProfile userProfile) {
+        String username = authentication.getName();
+        userService.updateUserProfile(username, userProfile);
+        return "User updated successfully.";
+    }
+
 
 }

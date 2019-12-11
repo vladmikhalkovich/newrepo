@@ -56,7 +56,6 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name = "lecturer_id")
-   // @JsonIgnore
     private Lecturer lecturer;
 
     @Override
