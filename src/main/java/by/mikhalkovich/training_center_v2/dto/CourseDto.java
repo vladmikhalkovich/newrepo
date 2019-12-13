@@ -28,7 +28,7 @@ public class CourseDto {
         courseDto.setCourseDuration(course.getCourseDuration());
         courseDto.setStartDate(course.getStartDate());
         courseDto.setCategory(course.getCategory());
-        courseDto.setLecturerId(course.getLecturer().getId());
+        courseDto.setLecturerId(course.getLecturer().getUser().getId());
         return courseDto;
     }
 }

@@ -12,4 +12,6 @@ public interface LessonService {
     LessonDto findById(Long id);
 
     Lesson save(Lesson lesson);
+
+    Lesson createLesson(Long id, Lesson newLesson);
 }

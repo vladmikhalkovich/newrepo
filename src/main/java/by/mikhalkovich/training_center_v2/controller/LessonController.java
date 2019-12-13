@@ -1,6 +1,7 @@
 package by.mikhalkovich.training_center_v2.controller;
 
 import by.mikhalkovich.training_center_v2.dto.LessonDto;
+import by.mikhalkovich.training_center_v2.model.Course;
 import by.mikhalkovich.training_center_v2.model.Lesson;
 import by.mikhalkovich.training_center_v2.service.CourseService;
 import by.mikhalkovich.training_center_v2.service.LessonService;
@@ -35,14 +36,18 @@ public class LessonController {
     @PostMapping("/course/{id}/create_lesson")
     public String createLesson(@PathVariable("id") Long id,
                                @RequestBody Lesson newLesson) {
-        newLesson.setCourse(courseService.findById(id));
-        lessonService.save(newLesson);
+        lessonService.createLesson(id, newLesson);
         return "Lesson added successfully.";
     }
     //update lesson
     @PutMapping("/lesson/{id}/update")
     public String updateLesson(@PathVariable("id") Lesson lessonFromDb,
                                @RequestBody Lesson lesson) {
+        if (lessonFromDb.getLessonDuration() != lesson.getLessonDuration()) {
+            Course course = lessonFromDb.getCourse();
+            course.setCourseDuration(course.getCourseDuration() - lessonFromDb.getLessonDuration() + lesson.getLessonDuration());
+            courseService.save(course);
+        }
         BeanUtils.copyProperties(lesson, lessonFromDb, "id", "course");
         lessonService.save(lessonFromDb);
         return "Lesson updated successfully.";
