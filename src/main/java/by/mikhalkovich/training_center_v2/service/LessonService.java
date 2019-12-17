@@ -14,4 +14,6 @@ public interface LessonService {
     Lesson save(Lesson lesson);
 
     Lesson createLesson(Long id, Lesson newLesson);
+
+    void deleteById(Long id);
 }

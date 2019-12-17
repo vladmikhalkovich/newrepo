@@ -27,7 +27,7 @@ public class ListenerController {
     }
 
     //get current listeners courses
-    @GetMapping("/listener/courses")
+    @GetMapping("/listener/my_courses")
     public List<CourseDto> getCurrentListenerCourses(Authentication authentication) {
         String username = authentication.getName();
         Listener currentListener = listenerService.findByUserId(userService.findByUsername(username).getId());

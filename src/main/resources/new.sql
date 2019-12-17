@@ -1,0 +1,1 @@
+ALTER TABLE course modify column course_duration INT DEFAULT 0;

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class UserProfileController {
 
@@ -39,18 +41,17 @@ public class UserProfileController {
         return userService.findRoleById(id);
     }
 
-//    @PutMapping("/user_profile/change_password")
-//    public String changePassword(Authentication authentication,
-//                                 @RequestBody PasswordDto passwordDto) {
-//        String username = authentication.getName();
-//    }
-
     @PutMapping("/user_profile/update")
     public String updateUserProfile(Authentication authentication,
                                     @RequestBody UserProfile userProfile) {
         String username = authentication.getName();
         userService.updateUserProfile(username, userProfile);
         return "User updated successfully.";
+    }
+
+    @GetMapping("/user_profile/all")
+    public List<UserProfile> getAllUsers(){
+        return userService.getAllUsers();
     }
 
 

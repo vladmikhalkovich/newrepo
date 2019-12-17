@@ -27,9 +27,6 @@ public class Lesson {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startTime;
 
-    @Column(name = "lesson_description")
-    private String lessonDescription;
-
     @Column(name = "lesson_duration")
     private int lessonDuration;
 

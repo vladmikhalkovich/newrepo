@@ -1,5 +1,6 @@
 package by.mikhalkovich.training_center_v2.controller;
 
+import by.mikhalkovich.training_center_v2.dto.UserProfile;
 import by.mikhalkovich.training_center_v2.model.Lecturer;
 import by.mikhalkovich.training_center_v2.model.Listener;
 import by.mikhalkovich.training_center_v2.model.Role;
@@ -10,10 +11,7 @@ import by.mikhalkovich.training_center_v2.service.ListenerService;
 import by.mikhalkovich.training_center_v2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("/admin")
 public class AdminController {
@@ -35,7 +33,7 @@ public class AdminController {
         this.listenerService = listenerService;
     }
     // add user
-    @PostMapping("/admin/add")
+    @PostMapping("/admin/add_user")
     public String addUser(@RequestBody User user){
         String password = user.getPassword();
         String encryptPassword = passwordEncoder.encode(password);
@@ -56,5 +54,12 @@ public class AdminController {
         }
         return "User added successfully.";
     }
+
+    @PutMapping("/admin/{id}/update_user")
+    public void updateUserProfileByAdmin(@PathVariable("id") Long id,
+                                         @RequestBody UserProfile userProfile) {
+        userService.updateUserProfileByAdmin(id, userProfile);
+    }
+
 
 }

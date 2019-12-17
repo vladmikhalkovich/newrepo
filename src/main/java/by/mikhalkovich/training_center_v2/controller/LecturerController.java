@@ -44,10 +44,11 @@ public class LecturerController {
         return courseService.findCoursesByLecturerId(currentLecturer.getId());
     }
     //update course
-    @PutMapping("/lecturer/{id}/update")
+    @PutMapping("/course/{id}/update")
     public String updateCourse(@PathVariable("id") Course courseFromDb,
                                @RequestBody Course course) {
-        BeanUtils.copyProperties(course, courseFromDb, "id", "lecturer", "listener", "lesson");
+        BeanUtils.copyProperties(course, courseFromDb, "id", "courseDuration",
+                "lecturer", "listener", "lesson");
         courseService.save(courseFromDb);
         return "Course updated successfully.";
     }

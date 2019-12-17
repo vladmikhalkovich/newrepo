@@ -1,5 +1,6 @@
 package by.mikhalkovich.training_center_v2.dto;
 
+import by.mikhalkovich.training_center_v2.model.Role;
 import by.mikhalkovich.training_center_v2.model.User;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ public class UserProfile {
     private String firstName;
     private String lastName;
     private String skype;
+    private Role role;
 
     public static UserProfile fromUser(User user){
         UserProfile userProfile = new UserProfile();
@@ -18,6 +20,7 @@ public class UserProfile {
         userProfile.setFirstName(user.getFirstName());
         userProfile.setLastName(user.getLastName());
         userProfile.setSkype(user.getSkype());
+        userProfile.setRole(user.getRole());
         return userProfile;
     }
 }

@@ -65,5 +65,27 @@ public class UserServiceImpl implements UserService {
         return userProfile;
     }
 
+    @Override
+    public List<UserProfile> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserProfile> userProfiles = new ArrayList<>(users.size());
+        for (User user : users) {
+            userProfiles.add(UserProfile.fromUser(user));
+        }
+        return userProfiles;
+    }
+
+    @Override
+    public void updateUserProfileByAdmin(Long id, UserProfile userProfile) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.get();
+        user.setSkype(userProfile.getSkype());
+        user.setLastName(userProfile.getLastName());
+        user.setFirstName(userProfile.getFirstName());
+        user.setUsername(userProfile.getEmail());
+        user.setRole(userProfile.getRole());
+        userRepository.save(user);
+    }
+
 
 }

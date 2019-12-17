@@ -20,4 +20,8 @@ public interface UserService {
 
     UserProfile updateUserProfile(String username, UserProfile userProfile);
 
+    List<UserProfile> getAllUsers();
+
+    void updateUserProfileByAdmin(Long id, UserProfile userProfile);
+
 }

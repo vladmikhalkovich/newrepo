@@ -52,4 +52,9 @@ public class LessonController {
         lessonService.save(lessonFromDb);
         return "Lesson updated successfully.";
     }
+
+    @DeleteMapping("/lesson/{id}/delete")
+    public void deleteLesson(@PathVariable("id") Long id){
+        lessonService.deleteById(id);
+    }
 }

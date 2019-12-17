@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class LessonServiceImpl implements LessonService {
         for (Lesson lesson : lessons) {
             lessonsDto.add(LessonDto.fromLesson(lesson));
         }
+        lessonsDto.sort(Comparator.comparing(LessonDto::getStartTime));
         return lessonsDto;
     }
 
@@ -56,5 +58,15 @@ public class LessonServiceImpl implements LessonService {
         course.setCourseDuration(duration);
         courseService.save(course);
         return newLesson;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Optional<Lesson> optionalLesson = lessonRepository.findById(id);
+        Lesson lesson = optionalLesson.get();
+        Course course = lesson.getCourse();
+        course.setCourseDuration(course.getCourseDuration() - lesson.getLessonDuration());
+        courseService.save(course);
+        lessonRepository.deleteById(id);
     }
 }
