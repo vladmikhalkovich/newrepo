@@ -1,1 +1,1 @@
-ALTER TABLE course modify column course_duration INT DEFAULT 0;
+select c.id, c.course_name from Course c where c.lecturer_id = 1;

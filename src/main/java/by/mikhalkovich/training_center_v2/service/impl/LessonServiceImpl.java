@@ -9,6 +9,7 @@ import by.mikhalkovich.training_center_v2.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -68,5 +69,15 @@ public class LessonServiceImpl implements LessonService {
         course.setCourseDuration(course.getCourseDuration() - lesson.getLessonDuration());
         courseService.save(course);
         lessonRepository.deleteById(id);
+    }
+
+    @Override
+    public List<LessonDto> getLessonsByIdAndBetweenDates(Long id, LocalDateTime start, LocalDateTime end) {
+        List<Lesson> lessons = lessonRepository.getLessonsByIdAndBetweenDates(id, start, end);
+        List<LessonDto> lessonsDto = new ArrayList<>(lessons.size());
+        for (Lesson lesson : lessons) {
+            lessonsDto.add(LessonDto.fromLesson(lesson));
+        }
+        return lessonsDto;
     }
 }

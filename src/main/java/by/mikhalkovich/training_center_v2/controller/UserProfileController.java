@@ -1,6 +1,5 @@
 package by.mikhalkovich.training_center_v2.controller;
 
-import by.mikhalkovich.training_center_v2.dto.PasswordDto;
 import by.mikhalkovich.training_center_v2.dto.UserProfile;
 import by.mikhalkovich.training_center_v2.model.Role;
 import by.mikhalkovich.training_center_v2.model.User;

@@ -5,7 +5,6 @@ import by.mikhalkovich.training_center_v2.model.Lecturer;
 import by.mikhalkovich.training_center_v2.model.Listener;
 import by.mikhalkovich.training_center_v2.model.Role;
 import by.mikhalkovich.training_center_v2.model.User;
-import by.mikhalkovich.training_center_v2.repository.UserRepository;
 import by.mikhalkovich.training_center_v2.service.LecturerService;
 import by.mikhalkovich.training_center_v2.service.ListenerService;
 import by.mikhalkovich.training_center_v2.service.UserService;

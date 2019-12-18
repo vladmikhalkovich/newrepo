@@ -2,13 +2,11 @@ package by.mikhalkovich.training_center_v2.service.impl;
 
 import by.mikhalkovich.training_center_v2.dto.CourseDto;
 import by.mikhalkovich.training_center_v2.dto.UserProfile;
-import by.mikhalkovich.training_center_v2.model.Category;
 import by.mikhalkovich.training_center_v2.model.Course;
 import by.mikhalkovich.training_center_v2.model.Listener;
 import by.mikhalkovich.training_center_v2.model.User;
 import by.mikhalkovich.training_center_v2.repository.CourseRepository;
 import by.mikhalkovich.training_center_v2.repository.ListenerRepository;
-import by.mikhalkovich.training_center_v2.repository.UserRepository;
 import by.mikhalkovich.training_center_v2.service.CourseService;
 import by.mikhalkovich.training_center_v2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

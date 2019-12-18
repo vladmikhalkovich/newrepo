@@ -2,15 +2,14 @@ package by.mikhalkovich.training_center_v2.controller;
 
 import by.mikhalkovich.training_center_v2.dto.CourseDto;
 import by.mikhalkovich.training_center_v2.dto.UserProfile;
-import by.mikhalkovich.training_center_v2.model.Category;
-import by.mikhalkovich.training_center_v2.model.Course;
-import by.mikhalkovich.training_center_v2.model.User;
 import by.mikhalkovich.training_center_v2.service.CourseService;
 import by.mikhalkovich.training_center_v2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
