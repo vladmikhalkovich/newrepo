@@ -1,6 +1,6 @@
-import API from '../api/config';
+import Api from '../api/config';
 
-const login = authData => API.post('/login', authData);
+const login = authData => Api().post('/login', authData);
 
 export const authService = {
   login,

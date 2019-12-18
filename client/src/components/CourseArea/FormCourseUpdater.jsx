@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useForm from 'react-hook-form';
 import { connect } from 'react-redux';
-import { addDays, addYears, format } from 'date-fns';
+import { addDays, addYears } from 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import clsx from 'clsx';
 import {
@@ -17,6 +17,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
+import { formatDateForFields } from '../../_utils/dateHelpers';
 import { fields } from '../../constants/courseCreatorFields';
 import { categories } from '../../constants/categories';
 import { useStyles } from './styles';
@@ -67,7 +68,7 @@ const FormCourseUpdater = ({
 
   const handleDateChange = date => {
     setSelectedDate(date);
-    setValue('startDate', format(new Date(date), 'yyyy-MM-dd'));
+    setValue('startDate', formatDateForFields(date));
   };
 
   const buttonClassname = clsx({

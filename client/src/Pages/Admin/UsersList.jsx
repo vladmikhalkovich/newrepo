@@ -23,14 +23,7 @@ const UsersList = ({ users, currentUserId }) => {
 
   return (
     <Grid item xs={12}>
-      <Box
-        py={1}
-        px={2}
-        my={1}
-        display="flex"
-        alignItems="baseline"
-        justifyContent="space-between"
-      >
+      <Box py={1} px={2} my={1} display="flex" alignItems="baseline" justifyContent="space-between">
         <Typography variant="h4" component="h2">
           Users
         </Typography>
@@ -46,21 +39,19 @@ const UsersList = ({ users, currentUserId }) => {
                 <React.Fragment key={`userItem ${id}`}>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                      <Avatar
-                        alt={firstName}
-                        src={`https://i.pravatar.cc/150?u=${id}`}
-                      ></Avatar>
+                      <Avatar alt={firstName} src={`https://i.pravatar.cc/150?u=${id}`}></Avatar>
                     </ListItemAvatar>
                     <ListItemText
                       primary={firstName + ' ' + lastName}
-                      secondary={<Link href={`mailto:${email}`}>{email}</Link>}
+                      secondary={
+                        <Link color="secondary" href={`mailto:${email}`}>
+                          {email}
+                        </Link>
+                      }
                     />
                     {currentUserId !== id ? (
                       <ListItemSecondaryAction>
-                        <IconButton
-                          to={`${path}/user/edit/${id}`}
-                          component={RouterLink}
-                        >
+                        <IconButton to={`${path}/edit/${id}`} component={RouterLink}>
                           <EditRoundedIcon />
                         </IconButton>
                       </ListItemSecondaryAction>

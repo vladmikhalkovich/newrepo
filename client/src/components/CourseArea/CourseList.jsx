@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { history } from '../../_utils/history';
 import {
   Table,
   TableBody,
@@ -10,8 +9,11 @@ import {
   TableRow,
   TableSortLabel,
 } from '@material-ui/core';
-// import Tooltip from '@material-ui/core/Tooltip';
+
+import { history } from '../../_utils/history';
 import { stableSort, getSorting } from '../../_utils/sortData';
+import { formatCategory } from '../../_utils/stringFormatter';
+import { formatCourseStart } from '../../_utils/dateHelpers';
 import { useStyles } from './styles';
 
 const headCells = [
@@ -95,24 +97,23 @@ const CourseList = ({ courses }) => {
           {stableSort(courses, getSorting(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map(
-              (
-                { id, courseName, courseDescription, startDate, category },
-                index
-              ) => {
-                return (
-                  <TableRow
-                    hover
-                    role="link"
-                    key={courseName}
-                    onClick={e => handleClick(e, id)}
-                  >
-                    <TableCell>{courseName}</TableCell>
-                    <TableCell>{courseDescription}</TableCell>
-                    <TableCell align="right">{startDate}</TableCell>
-                    <TableCell align="right">{category}</TableCell>
-                  </TableRow>
-                );
-              }
+              ({ id, courseName, courseDescription, startDate, category }) => (
+                <TableRow
+                  hover
+                  role="link"
+                  key={courseName}
+                  onClick={e => handleClick(e, id)}
+                >
+                  <TableCell>{courseName}</TableCell>
+                  <TableCell>
+                    <span className={classes.courseDescriptionTable}>
+                      {courseDescription}
+                    </span>
+                  </TableCell>
+                  <TableCell>{formatCourseStart(startDate)}</TableCell>
+                  <TableCell>{formatCategory(category)}</TableCell>
+                </TableRow>
+              )
             )}
         </TableBody>
       </Table>

@@ -24,7 +24,7 @@ export const userLogin = ({ username, password }) => dispatch => {
       });
       localStorage.setItem('authToken', headers.authorization);
       dispatch(getCurrentUser);
-      history.push('/courses');
+      history.push('/dashboard');
     })
     .catch(error => {
       dispatch({

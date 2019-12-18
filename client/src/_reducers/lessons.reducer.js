@@ -11,6 +11,10 @@ import {
   UPDATE_LESSON_REQUEST,
   UPDATE_LESSON_SUCCESS,
   UPDATE_LESSON_FAILURE,
+  DELETE_LESSON_REQUEST,
+  DELETE_LESSON_SUCCESS,
+  DELETE_LESSON_FAILURE,
+  CLEAR_LESSON_CREATED_STATE,
 } from '../_actions';
 import createReducer from '../_utils/createReducer';
 
@@ -23,6 +27,9 @@ const defaultState = {
 
   isLessonUpdatingProgress: false,
   isLessonUpdated: false,
+
+  isLessonDeleteRequest: false,
+  isLessonDeleted: false,
 
   lessons: [],
   lessonInfo: {},
@@ -44,6 +51,7 @@ export default createReducer(defaultState, (state, action) => ({
     isRequestProcessing: false,
     errorMessage: action.payload,
   }),
+
   [GET_LESSON_INFO_REQUEST]: () => ({
     ...state,
     isGettingLessonProcessing: true,
@@ -58,6 +66,7 @@ export default createReducer(defaultState, (state, action) => ({
     isGettingLessonProcessing: false,
     errorMessage: action.payload,
   }),
+
   [CREATE_LESSON_REQUEST]: () => ({
     ...state,
     isLessonCreationProgress: true,
@@ -73,6 +82,11 @@ export default createReducer(defaultState, (state, action) => ({
     isLessonCreated: false,
     errorMessage: action.payload,
   }),
+  [CLEAR_LESSON_CREATED_STATE]: () => ({
+    ...state,
+    isLessonCreated: false,
+  }),
+
   [UPDATE_LESSON_REQUEST]: () => ({
     ...state,
     isLessonUpdatingProgress: true,
@@ -86,6 +100,23 @@ export default createReducer(defaultState, (state, action) => ({
     ...state,
     isLessonUpdatingProgress: false,
     isLessonUpdated: false,
+    errorMessage: action.payload,
+  }),
+
+  [DELETE_LESSON_REQUEST]: () => ({
+    ...state,
+    isLessonDeleteRequest: true,
+  }),
+  [DELETE_LESSON_SUCCESS]: () => ({
+    ...state,
+    isLessonDeleteRequest: false,
+    lessons: state.lessons.filter(lesson => lesson.id !== action.payload.deletedLessonId),
+    isLessonDeleted: true,
+  }),
+  [DELETE_LESSON_FAILURE]: () => ({
+    ...state,
+    isLessonDeleteRequest: false,
+    isLessonDeleted: false,
     errorMessage: action.payload,
   }),
 }));

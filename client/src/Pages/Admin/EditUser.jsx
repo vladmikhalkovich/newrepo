@@ -8,8 +8,11 @@ import EditUserForm from './EditUserForm';
 class EditUser extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { userId: window.location.href.split('/')[6] };
+    this.state = {
+      userId: window.location.href.split('/')[6],
+    };
   }
+
   componentDidMount() {
     this.props.getUserById(this.state.userId);
   }
@@ -18,13 +21,14 @@ class EditUser extends React.Component {
     return (
       <Grid item sm={6}>
         <Paper>
-          <Box p={2} my={3}>
+          <Box p={2}>
             <Typography variant="h5" component="h2">
               {'Edit user'}
             </Typography>
             <EditUserForm
-              updt={this.props.updateUsers}
+              userId={this.state.userId}
               userData={this.props.userData}
+              updateUsers={this.props.updateUsers}
             />
           </Box>
         </Paper>

@@ -1,13 +1,13 @@
 const CourseNameProps = {
   id: 'courseName',
-  label: 'Course name',
+  label: 'Course Name',
   name: 'courseName',
   type: 'text',
 };
 
 const CourseDescriptionProps = {
-  id: 'CourseDescription',
-  label: 'Course duration',
+  id: 'courseDescription',
+  label: 'Course Description',
   name: 'courseDescription',
   rows: 4,
 };
@@ -27,5 +27,8 @@ const StartDateProps = {
 };
 
 export const fields = {
-  CourseNameProps, CourseDescriptionProps, CourseCategoryProps, StartDateProps,
+  CourseNameProps,
+  CourseDescriptionProps,
+  CourseCategoryProps,
+  StartDateProps,
 };

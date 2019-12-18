@@ -1,23 +1,23 @@
-import { SECURE_API } from '../api/config';
+import Api from '../api/config';
 
-const API_URL = 'course';
+const API_PREFIX = 'course';
 
-const getAllCourses = () => SECURE_API.get(`${API_URL}/all`);
+const getAllCourses = () => Api().get(`${API_PREFIX}/all`);
 
-const getCourseById = courseId => SECURE_API.get(`${API_URL}/${courseId}`);
+const getCourseById = courseId => Api().get(`${API_PREFIX}/${courseId}`);
 
 const enrollCourse = courseId =>
-  SECURE_API.post(`${API_URL}/${courseId}/subscribe`);
+  Api().post(`${API_PREFIX}/${courseId}/subscribe`);
 const leaveCourse = courseId =>
-  SECURE_API.post(`${API_URL}/${courseId}/unsubscribe`);
+  Api().post(`${API_PREFIX}/${courseId}/unsubscribe`);
 
 const createCourse = courseData =>
-  SECURE_API.post(`${API_URL}/create`, courseData);
+  Api().post(`${API_PREFIX}/create`, courseData);
 const updateCourse = (courseId, courseData) =>
-  SECURE_API.put(`${API_URL}/${courseId}/update`, courseData);
+  Api().put(`${API_PREFIX}/${courseId}/update`, courseData);
 
-const getLecturerCourses = () => SECURE_API.get(`lecturer/my_courses`);
-const getListenerCourses = () => SECURE_API.get(`listener/my_courses`);
+const getLecturerCourses = () => Api().get(`lecturer/my_courses`);
+const getListenerCourses = () => Api().get(`listener/my_courses`);
 
 export const coursesService = {
   getAllCourses,

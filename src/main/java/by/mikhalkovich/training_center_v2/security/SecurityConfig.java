@@ -41,9 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers("/admin/**").permitAll()
-                .antMatchers("/user_profile").authenticated()
-                .and().httpBasic().disable();
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user_profile/**").authenticated()
+                .antMatchers("/calendar").authenticated()
+                .antMatchers("/listener/**").authenticated()
+                .antMatchers("/course/{id}/create_lesson", "/course/create", "/course/{id}/update," +
+                        "/lesson/{id}/update", "/lesson/{id}/delete").hasRole("LECTURER")
+                .antMatchers("/lesson/{id}", "/course/{id}/lessons", "/course/all", "/course/{id}",
+                        "/course/{id}/subscribe", "/course/{id}/unsubscribe", "/course/{id}/listeners").authenticated()
+               .and().httpBasic().disable();
     }
 
 

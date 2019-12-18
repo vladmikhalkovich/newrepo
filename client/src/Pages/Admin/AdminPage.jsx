@@ -1,14 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link as RouterLink } from 'react-router-dom';
 
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Container,
-  Grid,
-} from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Container, Grid, Link } from '@material-ui/core';
 import { ExitToAppRounded as ExitToAppRoundedIcon } from '@material-ui/icons';
 import { userLogout, getAllUsers } from '../../_actions';
 import UsersList from './UsersList';
@@ -34,18 +28,25 @@ class AdminPage extends React.Component {
           </Toolbar>
         </AppBar>
         <Container maxWidth="md">
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Switch>
               <Route exact path={match.path}>
-                <UsersList
-                  users={this.props.allUsers}
-                  currentUserId={this.props.currentUserId}
-                />
+                <UsersList users={this.props.allUsers} currentUserId={this.props.currentUserId} />
               </Route>
               <Route exact path={`${match.path}/user/create`}>
+                <Grid item xs={12}>
+                  <Link to="/admin/users" component={RouterLink}>
+                    {'Go back'}
+                  </Link>
+                </Grid>
                 <CreateUser updateUsers={getAllUsers} />
               </Route>
-              <Route exact path={`${match.path}/user/edit/:userId`}>
+              <Route exact path={`${match.path}/edit/:userId`}>
+                <Grid item xs={12}>
+                  <Link to="/admin/users" component={RouterLink}>
+                    {'Go back'}
+                  </Link>
+                </Grid>
                 <EditUser updateUsers={getAllUsers} />
               </Route>
             </Switch>

@@ -10,9 +10,15 @@ import {
   CardMedia,
   Button,
   Typography,
+  Box,Chip
 } from '@material-ui/core';
+import ScheduleRoundedIcon from '@material-ui/icons/ScheduleRounded';
+import EventRoundedIcon from '@material-ui/icons/EventRounded';
+
+import { useStyles } from './styles';
 
 const CourseCard = ({ courseData }) => {
+  const { courseCard, courseCardArea, courseActionArea } = useStyles();
   const { url } = useRouteMatch();
   const {
     id,
@@ -25,8 +31,8 @@ const CourseCard = ({ courseData }) => {
   } = courseData;
 
   return (
-    <Card>
-      <CardActionArea to={`${url}/${id}`} component={Link}>
+    <Card className={courseCard}>
+      <CardActionArea to={`${url}/${id}`} component={Link} className={courseCardArea}>
         <CardMedia
           image={imageUrl}
           title={courseName}
@@ -34,19 +40,27 @@ const CourseCard = ({ courseData }) => {
           component="img"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h6" component="h2">
             {courseName}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {courseDescription}
           </Typography>
-          <Typography>{courseDuration} hours</Typography>
-          <Typography>{formatCategory(category)}</Typography>
-          <Typography>{startDate}</Typography>
+          <Chip color="secondary" size="small" label={formatCategory(category)} />
+          <Box display="flex" m={-1}>
+            <Box display="flex" alignItems="center" m={1}>
+              <ScheduleRoundedIcon color="secondary" aria-label="course duration" />
+              <Typography component="span" variant="body2">{courseDuration} Hours</Typography>
+            </Box>
+            <Box display="flex" alignItems="center" m={1}>
+              <EventRoundedIcon size="small" color="secondary" aria-label="course start date" />
+              <Typography component="span" variant="body2">{startDate}</Typography>
+            </Box>
+          </Box>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button color="primary" to={`${url}/${id}`} component={Link}>
+      <CardActions className={courseActionArea}>
+        <Button color="secondary" to={`${url}/${id}`} component={Link}>
           {'Learn More'}
         </Button>
       </CardActions>

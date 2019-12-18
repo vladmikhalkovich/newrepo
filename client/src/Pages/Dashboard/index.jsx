@@ -8,7 +8,7 @@ class Dashboard extends React.Component {
     this.props.getCurrentUser();
 
     if (this.props.currentUser.role === 'ROLE_ADMIN') {
-      history.push('/admin');
+      history.push('/admin/users');
     } else {
       history.push('/courses');
     }
@@ -17,12 +17,15 @@ class Dashboard extends React.Component {
     return <div></div>;
   }
 }
+
 const mapStateToProps = state => ({
   currentUser: state.userReducer.currentUser,
 });
+
 const mapDispatchToProps = {
   getCurrentUser,
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

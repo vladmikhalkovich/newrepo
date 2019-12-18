@@ -1,6 +1,6 @@
 import { userService } from '../_services';
 
-const uniqueAvatarCreator = id => `https://i.pravatar.cc/150?u=${id}`;
+const uniqueAvatarCreator = id => `https://i.pravatar.cc/150?u=1${id}`;
 
 export const GET_ALL_USERS_REQUEST = 'GET_ALL_USERS_REQUEST';
 export const GET_ALL_USERS_SUCCESS = 'GET_ALL_USERS_SUCCESS';

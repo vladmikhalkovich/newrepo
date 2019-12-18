@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { format } from 'date-fns';
 import { Link as RouterLink, useParams, useRouteMatch } from 'react-router-dom';
 
 import {
@@ -26,6 +25,7 @@ import {
   findUserInListeners,
 } from '../../_actions';
 import { formatCategory } from '../../_utils/stringFormatter';
+import { formatCourseStart } from '../../_utils/dateHelpers';
 import DashboardArea from '../DashboardArea';
 import LessonsList from '../Lessons/LessonsList';
 
@@ -36,6 +36,7 @@ const CourseInfo = ({
   courseData,
   isLoading,
   isSubscribing,
+  isSubscribedUser,
   isSubscribed,
   getCurrentUser,
   getCourseById,
@@ -45,7 +46,6 @@ const CourseInfo = ({
   const classes = useStyles();
   const { courseId } = useParams();
   const { url } = useRouteMatch();
-  const [processing, setProcessing] = useState(false);
   const {
     id,
     courseName,
@@ -69,6 +69,11 @@ const CourseInfo = ({
     leaveCourse(id);
   };
 
+  useEffect(() => {
+    getCourseById(courseId);
+    getCurrentUser();
+  }, [courseId, getCourseById, getCurrentUser, isSubscribedUser]);
+
   function coursePrimaryInfo() {
     return (
       <>
@@ -86,7 +91,7 @@ const CourseInfo = ({
         </Typography>
         <Typography>
           {'Start Date: '}
-          {startDate && format(new Date(startDate), 'MMM dd, yyyy')}
+          {startDate && formatCourseStart(startDate)}
         </Typography>
       </>
     );
@@ -113,26 +118,6 @@ const CourseInfo = ({
       </div>
     );
   }
-
-  useEffect(() => {
-    if (!currentUserId.length) {
-      getCurrentUser();
-    }
-    if (!courseData.id.length) {
-      getCourseById(courseId);
-    }
-    return () => {
-      setProcessing(isSubscribing);
-    };
-  }, [
-    courseData.id.length,
-    currentUserId.length,
-    courseId,
-    getCourseById,
-    getCurrentUser,
-    isSubscribed,
-    isSubscribing,
-  ]);
 
   return (
     <DashboardArea>
@@ -167,7 +152,7 @@ const CourseInfo = ({
                         variant="contained"
                         color="secondary"
                         to={`/course/edit/${courseId}`}
-                        disabled={processing}
+                        disabled={isSubscribing}
                         component={RouterLink}
                       >
                         {'Edit course'}
@@ -177,7 +162,7 @@ const CourseInfo = ({
                         variant="outlined"
                         color="secondary"
                         to={`${url}/add_lesson`}
-                        disabled={processing}
+                        disabled={isSubscribing}
                         component={RouterLink}
                       >
                         {'Add lessons'}
@@ -190,14 +175,14 @@ const CourseInfo = ({
                         size="large"
                         variant={isSubscribed ? 'outlined' : 'contained'}
                         color="secondary"
-                        disabled={processing}
+                        disabled={isSubscribing}
                         onClick={
                           isSubscribed ? handleLeaveClick : handleEnrollClick
                         }
                       >
                         {isSubscribed ? 'Unsubscribe' : 'Enroll'}
                       </Button>
-                      {processing && (
+                      {isSubscribing && (
                         <CircularProgress
                           size={24}
                           className={classes.buttonProgress}
@@ -213,7 +198,12 @@ const CourseInfo = ({
           )}
         </Grid>
         <Grid item xs={12}>
-          {!isLoading && <LessonsList courseId={courseId} />}
+          {!isLoading && (
+            <LessonsList
+              courseId={courseId}
+              isForLecturer={isCurrentUserLector}
+            />
+          )}
         </Grid>
       </Grid>
     </DashboardArea>
@@ -226,6 +216,7 @@ CourseInfo.propTypes = {
 
   isLoading: PropTypes.bool.isRequired,
   isSubscribing: PropTypes.bool.isRequired,
+  isSubscribedUser: PropTypes.bool.isRequired,
   isSubscribed: PropTypes.bool.isRequired,
 
   getCurrentUser: PropTypes.func.isRequired,
@@ -249,6 +240,7 @@ const mapStateToProps = state => {
     courseData,
     isLoading: coursesReducer.isGettingCourseProcessing,
     isSubscribing: coursesReducer.isSubscribeProcessing,
+    isSubscribedUser: coursesReducer.isSubscribedUser,
     isSubscribed: isCurrentUserSubscribed || false,
   };
 };

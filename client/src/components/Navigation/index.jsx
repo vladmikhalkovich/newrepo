@@ -17,8 +17,8 @@ const Navigation = () => {
   const navLinks = [
     {
       icon: <DashboardRounded />,
-      name: 'Dashboard',
-      link: '/dashboard',
+      name: 'Admin page',
+      link: '/admin/users',
     },
     {
       icon: <AccountBoxRounded />,
@@ -32,7 +32,7 @@ const Navigation = () => {
     },
     {
       icon: <EventNoteRounded />,
-      name: 'Calendar',
+      name: 'My calendar',
       link: '/calendar',
     },
   ];

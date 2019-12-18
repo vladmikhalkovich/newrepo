@@ -13,6 +13,7 @@ import { getCourseById, createLesson } from '../../_actions';
 
 import DashboardArea from '../../components/DashboardArea';
 import FormLessonCreator from '../../components/Lessons/FormLessonCreator';
+import LessonsList from '../../components/Lessons/LessonsList';
 
 class LessonsCreator extends React.Component {
   constructor(props) {
@@ -47,13 +48,24 @@ class LessonsCreator extends React.Component {
               <Typography color="textSecondary">{'Add lessons'}</Typography>
             </Breadcrumbs>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} sm={6}>
             <Paper>
               <Box p={3}>
                 <FormLessonCreator
                   courseId={courseId}
                   action={createLesson}
                   minDate={courseData.startDate}
+                />
+              </Box>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper>
+              <Box p={3}>
+                <LessonsList
+                  title="Created lessons"
+                  courseId={courseId}
+                  isForLecturer={true}
                 />
               </Box>
             </Paper>

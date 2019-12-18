@@ -16,6 +16,12 @@ export const UPDATE_LESSON_REQUEST = 'UPDATE_LESSON_REQUEST';
 export const UPDATE_LESSON_SUCCESS = 'UPDATE_LESSON_SUCCESS';
 export const UPDATE_LESSON_FAILURE = 'UPDATE_LESSON_FAILURE';
 
+export const DELETE_LESSON_REQUEST = 'DELETE_LESSON_REQUEST';
+export const DELETE_LESSON_SUCCESS = 'DELETE_LESSON_SUCCESS';
+export const DELETE_LESSON_FAILURE = 'DELETE_LESSON_FAILURE';
+
+export const CLEAR_LESSON_CREATED_STATE = 'CLEAR_LESSON_CREATED_STATE';
+
 export const getLessonsByCourse = courseId => dispatch => {
   dispatch({ type: GET_LESSONS_BY_COURSE_REQUEST });
 
@@ -59,6 +65,9 @@ export const createLesson = (courseId, lessonData) => dispatch => {
     .then(res => {
       dispatch({ type: CREATE_LESSON_SUCCESS });
     })
+    .then(() => {
+      dispatch({ type: CLEAR_LESSON_CREATED_STATE });
+    })
     .catch(error => {
       dispatch({ type: CREATE_LESSON_FAILURE, payload: error.message });
     });
@@ -74,5 +83,18 @@ export const updateLesson = (lessonId, lessonData) => dispatch => {
     })
     .catch(error => {
       dispatch({ type: UPDATE_LESSON_FAILURE, payload: error.message });
+    });
+};
+
+export const deleteLesson = lessonId => dispatch => {
+  dispatch({ type: DELETE_LESSON_REQUEST });
+
+  lessonService
+    .deleteLesson(lessonId)
+    .then(() => {
+      dispatch({ type: DELETE_LESSON_SUCCESS, payload: { deletedLessonId: lessonId } });
+    })
+    .catch(error => {
+      dispatch({ type: DELETE_LESSON_FAILURE, payload: error.message });
     });
 };
