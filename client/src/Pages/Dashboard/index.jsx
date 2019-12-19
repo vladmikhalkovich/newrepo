@@ -10,7 +10,7 @@ class Dashboard extends React.Component {
     if (this.props.currentUser.role === 'ROLE_ADMIN') {
       history.push('/admin/users');
     } else {
-      history.push('/courses');
+      history.push('/profile');
     }
   }
   render() {

@@ -11,7 +11,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findByLecturerId(Long id);
 
-    @Query(value = "select c.* from Course c join course_listener cl on c.id = cl.course_id where cl.listener_id = :id", nativeQuery = true)
+    @Query(value = "select c.* from course c join course_listener cl on c.id = cl.course_id where cl.listener_id = :id", nativeQuery = true)
     List<Course> getListenerCourses(Long id);
 
     List<Course> findByCategory(Category category);

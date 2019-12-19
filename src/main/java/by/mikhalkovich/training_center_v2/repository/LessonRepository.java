@@ -15,6 +15,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Override
     Optional<Lesson> findById(Long aLong);
 
-    @Query(value = "select l.* from Lesson l where l.course_id = :id and start_time between :start and :end", nativeQuery = true)
+    @Query(value = "select l.* from lesson l where l.course_id = :id and start_time between :start and :end", nativeQuery = true)
     List<Lesson> getLessonsByIdAndBetweenDates(Long id, LocalDateTime start, LocalDateTime end);
 }

@@ -10,6 +10,7 @@ import {
   GET_USER_BY_ID_FAILURE,
   GET_USER_ROLE_SUCCESS,
   GET_USER_ROLE_FAILURE,
+  CLEAR_USER_STORE,
 } from '../_actions';
 import createReducer from '../_utils/createReducer';
 
@@ -65,15 +66,6 @@ export default createReducer(defaultState, (state, action) => ({
     errorMessage: action.payload.error,
   }),
 
-  [GET_USER_ROLE_SUCCESS]: () => ({
-    ...state,
-    currentUserRole: action.payload,
-  }),
-  [GET_USER_ROLE_FAILURE]: () => ({
-    ...state,
-    errorMessage: action.payload,
-  }),
-
   [GET_USER_BY_ID_REQUEST]: () => ({
     ...state,
     isRequestProcessing: true,
@@ -96,4 +88,8 @@ export default createReducer(defaultState, (state, action) => ({
     ...state,
     errorMessage: action.payload,
   }),
+
+  [CLEAR_USER_STORE]: () => ({
+    ...defaultState
+  })
 }));

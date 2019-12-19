@@ -20,6 +20,8 @@ export const GET_USER_BY_ID_FAILURE = 'GET_USER_BY_ID_FAILURE';
 export const GET_USER_ROLE_SUCCESS = 'GET_USER_ROLE_SUCCESS';
 export const GET_USER_ROLE_FAILURE = 'GET_USER_ROLE_FAILURE';
 
+export const CLEAR_USER_STORE = 'CLEAR_USER_STORE';
+
 export const getAllUsers = () => dispatch => {
   dispatch({ type: GET_ALL_USERS_REQUEST });
   userService
@@ -105,4 +107,8 @@ export const getUserById = userId => dispatch => {
         payload: error.message,
       });
     });
+};
+
+export const clearUserStore = () => dispatch => {
+  dispatch({ type: CLEAR_USER_STORE });
 };

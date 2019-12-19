@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import useForm from 'react-hook-form';
 import { fields } from './editUserFields';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, TextField, Button, MenuItem } from '@material-ui/core';
+import { Box, TextField, Button, MenuItem, LinearProgress } from '@material-ui/core';
 
 import Api from '../../api/config';
 import { history } from '../../_utils/history';
@@ -32,7 +32,7 @@ const EditUserForm = ({ userId, userData, updateUsers }) => {
   }, [register, setValue, userData.role]);
 
   return (
-    userData.firstName.length && (
+    userData.firstName.length ? (
       <form onSubmit={handleSubmit(onSubmit)}>
         {fields.map(field => (
           <TextField
@@ -76,7 +76,7 @@ const EditUserForm = ({ userId, userData, updateUsers }) => {
           </Button>
         </Box>
       </form>
-    )
+    ) : <LinearProgress/>
   );
 };
 

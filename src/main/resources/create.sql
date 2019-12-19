@@ -30,9 +30,9 @@ CREATE TABLE listener (
 #TABLE: course
 CREATE TABLE course (
     id              INT             NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    course_name     VARCHAR (100)   NOT NULL,
+    course_name     VARCHAR (150)   NOT NULL,
     course_description BLOB         NOT NULL,
-    course_duration    INT          NOT NULL,
+    course_duration    INT          DEFAULT 0,
     start_date         DATE         NOT NULL,
     course_category    VARCHAR(100) NOT NULL,
     lecturer_id        INT          NOT NULL,
@@ -54,9 +54,8 @@ CREATE TABLE course_listener (
 CREATE TABLE lesson (
     id              INT             NOT NULL AUTO_INCREMENT PRIMARY KEY,
     start_time      DATETIME        NOT NULL,
-    lesson_description BLOB         NOT NULL,
     lesson_duration INT             NOT NULL,
-    lesson_title    VARCHAR(100)    NOT NULL,
+    lesson_title    VARCHAR(150)    NOT NULL,
     course_id       INT NOT NULL,
 
     FOREIGN KEY (course_id) REFERENCES course(id)

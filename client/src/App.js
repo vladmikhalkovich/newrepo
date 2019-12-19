@@ -8,7 +8,6 @@ import { PrivateRoute } from './components/PrivateRoute';
 import Notfound from './notfound';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
-import Dashboard from './Pages/Dashboard';
 import UserProfile from './Pages/UserProfile';
 import Courses from './Pages/Courses';
 import Calendar from './Pages/Calendar';
@@ -25,7 +24,6 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/register" component={Register} />
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/admin/users" component={AdminPage} />
         <PrivateRoute exact path="/profile" component={UserProfile} />
         <PrivateRoute exact path="/courses" component={Courses} />

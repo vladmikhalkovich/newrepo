@@ -1,6 +1,6 @@
 import { history } from '../_utils/history';
 import { authService } from '../_services';
-import { getCurrentUser } from './user.actions';
+import { clearUserStore } from './user.actions';
 
 export const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
@@ -17,14 +17,12 @@ export const userLogin = ({ username, password }) => dispatch => {
 
   authService
     .login({ username, password })
-    .then(({ headers, status }) => {
+    .then(({ headers }) => {
       dispatch({
         type: USER_LOGIN_SUCCESS,
         payload: headers.authorization,
       });
       localStorage.setItem('authToken', headers.authorization);
-      dispatch(getCurrentUser);
-      history.push('/dashboard');
     })
     .catch(error => {
       dispatch({
@@ -35,6 +33,7 @@ export const userLogin = ({ username, password }) => dispatch => {
 };
 
 export const userLogout = () => dispatch => {
+  dispatch(clearUserStore());
   localStorage.removeItem('authToken');
   history.push('/');
 };
