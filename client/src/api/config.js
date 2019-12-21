@@ -4,7 +4,7 @@ import axios from 'axios';
 //const cors_api_url = 'https://' + cors_api_host + '/';
 //const ngrok_server_number = 'c6b6d866';
 
-export const ENDPOINT =  'http://training-center-boot.herokuapp.com';
+export const ENDPOINT =  'https://training-center-boot.herokuapp.com';
   //cors_api_url + 'http://training-center-boot.herokuapp.com';
 
 const api = () => axios.create({
