@@ -1,15 +1,19 @@
 import { teal } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(({spacing, palette}) => ({
   filterContainer: {
-    margin: theme.spacing(0, 1, 1, 1),
+    margin: spacing(0, 1, 1, 1),
     width: '100%',
   },
   btnWrapper: {
     position: 'relative',
-    margin: theme.spacing(3, 0, 2),
+    margin: spacing(3, 0, 2),
     display: 'flex',
+    width: 'fit-content',
+    '& > .MuiButton-root + .MuiButton-root': {
+      marginLeft: spacing(2),
+    },
   },
   buttonProgress: {
     color: teal[400],
@@ -21,10 +25,6 @@ export const useStyles = makeStyles(theme => ({
   },
   buttonSuccess: {
     backgroundColor: teal[400],
-  },
-  courseCreatorForm: {
-    display: 'flex',
-    flexDirection: 'column',
   },
   visuallyHidden: {
     visibility: 'hidden',
@@ -38,20 +38,20 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     '& .MuiChip-root': {
-      margin: theme.spacing(0.5),
+      margin: spacing(0.5),
       position: 'absolute',
       top: 0,
       right: 0,
       borderRadius: 4,
-      background: `linear-gradient(45deg, ${theme.palette.secondary.light}, ${theme.palette.primary.main})`,
-      color: theme.palette.common.black,
+      background: `linear-gradient(45deg, ${palette.secondary.light}, ${palette.primary.main})`,
+      color: palette.common.black,
       fontWeight: 500,
     },
     '& svg': {
-      marginRight: theme.spacing(0.5),
+      marginRight: spacing(0.5),
     },
     '& p': {
-      marginBottom: theme.spacing(2),
+      marginBottom: spacing(2),
     }
   },
   courseCardArea: { flex: 1 },
@@ -61,10 +61,16 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   listeners: {
-    margin: theme.spacing(1, -1 * 0.5),
+    display: 'flex',
+    margin: spacing(1, -1 * 0.5),
+    overflow: 'auto',
+  },
+  loadListeners: {
+    width: '100%',
+    margin: spacing(2, 0.5),
   },
   courseListener: {
-    margin: theme.spacing(0.5),
+    margin: spacing(0.5),
   },
   courseDescriptionTable: {
     display: '-webkit-box',
@@ -72,5 +78,12 @@ export const useStyles = makeStyles(theme => ({
     '-webkit-box-orient': 'vertical',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
+  },
+  courseCreatorForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    '& $btnWrapper': {
+      width: '100%',
+    }
   },
 }));

@@ -78,6 +78,7 @@ export const enrollCourse = courseId => dispatch => {
     .enrollCourse(courseId)
     .then(() => {
       dispatch({ type: ENROLL_COURSE_SUCCESS });
+      dispatch(getCourseById(courseId));
     })
     .catch(error => {
       dispatch({
@@ -94,6 +95,7 @@ export const leaveCourse = courseId => dispatch => {
     .leaveCourse(courseId)
     .then(() => {
       dispatch({ type: LEAVE_COURSE_SUCCESS });
+      dispatch(getCourseById(courseId));
     })
     .catch(error => {
       dispatch({

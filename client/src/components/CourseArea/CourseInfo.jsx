@@ -14,7 +14,7 @@ import {
   Paper,
   Button,
   Typography,
-  Divider,
+  Divider, LinearProgress,
 } from '@material-ui/core';
 
 import {
@@ -43,7 +43,13 @@ const CourseInfo = ({
   enrollCourse,
   leaveCourse,
 }) => {
-  const classes = useStyles();
+  const {
+    listeners: listenersList,
+    loadListeners,
+    courseListener,
+    btnWrapper,
+    buttonProgress
+  } = useStyles();
   const { courseId } = useParams();
   const { url } = useRouteMatch();
   const {
@@ -99,22 +105,23 @@ const CourseInfo = ({
 
   function courseListeners() {
     return (
-      <div className={classes.listeners}>
-        {listeners.map(({ id, firstName, lastName }) => (
-          <Chip
-            key={id + 'listener'}
-            className={classes.courseListener}
-            avatar={
-              <Avatar
-                alt=""
-                aria-hidden
-                src={`https://i.pravatar.cc/150?u=${id}`}
-              />
-            }
-            label={`${firstName} ${lastName}`}
-            variant="outlined"
-          />
-        ))}
+      <div className={listenersList}>
+        {isLoading ? <LinearProgress className={loadListeners}/> :
+          listeners.map(({ id, firstName, lastName }) => (
+            <Chip
+              key={id + 'listener'}
+              className={courseListener}
+              avatar={
+                <Avatar
+                  alt=""
+                  aria-hidden
+                  src={`https://i.pravatar.cc/150?u=${id}`}
+                />
+              }
+              label={`${firstName} ${lastName}`}
+              variant="outlined"
+            />
+          ))}
       </div>
     );
   }
@@ -137,7 +144,7 @@ const CourseInfo = ({
           </Breadcrumbs>
         </Grid>
         <Grid item xs={12}>
-          {isLoading && !id.length ? (
+          {!courseName.length ? (
             <CircularProgress size={24} />
           ) : (
             <Paper>
@@ -146,7 +153,7 @@ const CourseInfo = ({
                 {courseListeners()}
                 {isStartDateAfterNow ? (
                   isCurrentUserLector ? (
-                    <div className={classes.btnWrapper}>
+                    <div className={btnWrapper}>
                       <Button
                         size="large"
                         variant="contained"
@@ -169,8 +176,7 @@ const CourseInfo = ({
                       </Button>
                     </div>
                   ) : (
-                    <div className={classes.btnWrapper}>
-                      {isSubscribed ? 'Changed your mind?' : null}
+                    <div className={btnWrapper}>
                       <Button
                         size="large"
                         variant={isSubscribed ? 'outlined' : 'contained'}
@@ -185,7 +191,7 @@ const CourseInfo = ({
                       {isSubscribing && (
                         <CircularProgress
                           size={24}
-                          className={classes.buttonProgress}
+                          className={buttonProgress}
                         />
                       )}
                     </div>

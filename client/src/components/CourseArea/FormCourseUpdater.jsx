@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import useForm from 'react-hook-form';
 import { connect } from 'react-redux';
-import { addDays, addYears } from 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
 import clsx from 'clsx';
+import useForm from 'react-hook-form';
+import DateFnsUtils from '@date-io/date-fns';
+import { addDays, addYears } from 'date-fns';
+
 import {
   Button,
   TextField,
@@ -18,16 +19,17 @@ import {
 } from '@material-ui/pickers';
 
 import { formatDateForFields } from '../../_utils/dateHelpers';
-import { fields } from '../../constants/courseCreatorFields';
+import { fields } from '../../constants/courseFields';
 import { categories } from '../../constants/categories';
 import { useStyles } from './styles';
+import { history } from '../../_utils/history';
 
 const FormCourseUpdater = ({
   courseId,
   courseData,
   updateCourse,
   isCourseUpdatingProgress,
-  isCourseCreated,
+  isCourseUpdated,
 }) => {
   const { courseName, courseDescription, startDate, category } = courseData;
   const { handleSubmit, register, getValues, setValue } = useForm({
@@ -44,21 +46,25 @@ const FormCourseUpdater = ({
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const classes = useStyles();
+  const {
+    courseCreatorForm,
+    btnWrapper,
+    buttonSuccess,
+    buttonProgress
+  } = useStyles();
 
   useEffect(() => {
     setLoading(isCourseUpdatingProgress);
-    setSuccess(isCourseCreated);
+    setSuccess(isCourseUpdated);
 
     register({ name: 'category', type: 'text', required: true });
     register({ name: 'startDate', type: 'text', required: true });
   }, [
     isCourseUpdatingProgress,
-    isCourseCreated,
+    isCourseUpdated,
     register,
     courseId,
     courseData,
-    setValue,
   ]);
 
   const handleSelectChange = e => {
@@ -72,19 +78,22 @@ const FormCourseUpdater = ({
   };
 
   const buttonClassname = clsx({
-    [classes.buttonSuccess]: success,
+    [buttonSuccess]: success,
   });
 
   const onSubmit = () => {
     setLoading(true);
     updateCourse(courseId, getValues());
+    if (isCourseUpdated) {
+      history.push(`course/${courseId}`)
+    }
   };
 
   return (
     courseData && (
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={classes.courseCreatorForm}
+        className={courseCreatorForm}
       >
         <Typography variant="h5" component="h2">
           {'Update course'}
@@ -137,7 +146,7 @@ const FormCourseUpdater = ({
             }}
           />
         </MuiPickersUtilsProvider>
-        <div className={classes.btnWrapper}>
+        <div className={btnWrapper}>
           <Button
             type="submit"
             fullWidth
@@ -150,7 +159,7 @@ const FormCourseUpdater = ({
             {'Update & Publish'}
           </Button>
           {loading && (
-            <CircularProgress size={24} className={classes.buttonProgress} />
+            <CircularProgress size={24} className={buttonProgress} />
           )}
         </div>
       </form>

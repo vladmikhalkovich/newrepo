@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import useForm from 'react-hook-form';
 import { connect } from 'react-redux';
-import { addDays } from 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
 import clsx from 'clsx';
+import useForm from 'react-hook-form';
+import DateFnsUtils from '@date-io/date-fns';
+import { addDays } from 'date-fns';
 
 import {
   Button,
@@ -20,9 +20,10 @@ import {
 
 import { createCourse } from '../../_actions';
 import { formatDateForFields } from '../../_utils/dateHelpers';
-import { fields } from '../../constants/courseCreatorFields';
+import { fields } from '../../constants/courseFields';
 import { categories } from '../../constants/categories';
 import { useStyles } from './styles';
+import { history } from '../../_utils/history';
 
 const FormCourseCreator = ({
   isCourseCreationProgress,
@@ -35,7 +36,14 @@ const FormCourseCreator = ({
   const [selectedDate, setSelectedDate] = useState(addDays(new Date(), 7));
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const classes = useStyles();
+
+  const {
+    courseCreatorForm,
+    btnWrapper,
+    buttonSuccess,
+    buttonProgress
+  } = useStyles();
+
 
   useEffect(() => {
     setLoading(isCourseCreationProgress);
@@ -55,7 +63,7 @@ const FormCourseCreator = ({
   };
 
   const buttonClassname = clsx({
-    [classes.buttonSuccess]: success,
+    [buttonSuccess]: success,
   });
 
   const values = getValues();
@@ -63,11 +71,15 @@ const FormCourseCreator = ({
   const onSubmit = () => {
     setLoading(true);
     createCourse(values);
+    if (isCourseCreated) {
+      history.push('/courses')
+    }
   };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={classes.courseCreatorForm}
+      className={courseCreatorForm}
     >
       <Typography variant="h5" component="h2">
         Create new course
@@ -115,7 +127,7 @@ const FormCourseCreator = ({
           }}
         />
       </MuiPickersUtilsProvider>
-      <div className={classes.btnWrapper}>
+      <div className={btnWrapper}>
         <Button
           type="submit"
           fullWidth
@@ -128,7 +140,7 @@ const FormCourseCreator = ({
           {'Create & Publish'}
         </Button>
         {loading && (
-          <CircularProgress size={24} className={classes.buttonProgress} />
+          <CircularProgress size={24} className={buttonProgress} />
         )}
       </div>
     </form>
